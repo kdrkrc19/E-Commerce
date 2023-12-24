@@ -47,9 +47,9 @@ namespace Services
         public IEnumerable<ExpandoObject> GetAllProductsList(RequestParameters parameters, bool trackChanges)
         {
             List<ProductsDto> productsDto = new List<ProductsDto>();
-            
+
             var product = _repositoryManager.Product.GenericRead(trackChanges);
-            
+            //var product = _repositoryManager.Product.GetPagedProducts(parameters, false);
 
             foreach (var item in product)
             {

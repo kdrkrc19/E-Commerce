@@ -11,5 +11,6 @@ namespace Services.Contracts
         IBrandService BrandService { get; }
         IModelService ModelService { get; }
         IProductService ProductService { get; }
+        IAuthenticationService AuthenticationService { get; }
     }
 }

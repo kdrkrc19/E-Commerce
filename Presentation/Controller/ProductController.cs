@@ -1,5 +1,7 @@
 ﻿using Entities;
 using Entities.ModelsDTO;
+using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Services.Contracts;
@@ -13,6 +15,10 @@ namespace Presentation.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 30)]
+    //[ResponseCache(CacheProfileName = "MyCache")] 
+    //Validation Model Cache Yöntemi Kullanılırsa
+    //Eğer veri üzerinde değişiklik olmamışsa 304 not modified kodu döner.(Veriniz Hala Güncel)
     public class ProductController : ControllerBase
     {
         private readonly IServiceManager _serviceManager;
@@ -105,7 +111,9 @@ namespace Presentation.Controller
 
         //[HttpOptions]
         //[HttpHead]
+        [Authorize]
         [HttpGet("get-product-list")]
+        //[ResponseCache(Duration = 30)] //Maksimum Cacheleme süresi 60 saniye olarak ayarlandı
         public IActionResult GetProductList([FromQuery] RequestParameters parameters)
         {
             Response.Headers.Add("Content-Type", "application/json");

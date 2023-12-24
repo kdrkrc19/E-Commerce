@@ -37,7 +37,7 @@ namespace Services
             _repositoryManager.Model.GenericDelete((Model)model);
         }
 
-        public IEnumerable<Model> GetAllModels(bool trackChanges)
+        public IEnumerable<Model> GetAllModelList(bool trackChanges)
         {
             return _repositoryManager.Model.GenericRead(trackChanges);
         }

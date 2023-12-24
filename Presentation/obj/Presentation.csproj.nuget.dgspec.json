@@ -44,6 +44,16 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.12, )"
+            },
+            "Microsoft.IdentityModel": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -109,6 +119,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Marvin.Cache.Headers": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            },
             "Microsoft.AspNetCore.Mvc.Core": {
               "target": "Package",
               "version": "[2.2.5, )"
@@ -255,6 +269,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.0.3, )"
             }
           },
           "imports": [

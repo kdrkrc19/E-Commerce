@@ -1,5 +1,7 @@
 ﻿using Entities.ModelsDTO;
+using Microsoft.AspNetCore.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -14,12 +16,14 @@ namespace Presentation.Controller
     public class ModelController : ControllerBase
     {
         private readonly IServiceManager _serviceManager;
-        public ModelController(IServiceManager serviceMananger)
+        private readonly LinkGenerator _linkGenerator;
+        public ModelController(IServiceManager serviceMananger, LinkGenerator linkGenerator)
         {
             _serviceManager = serviceMananger;
+            _linkGenerator = linkGenerator;
         }
 
-        [HttpPost("add-model")]
+        [HttpPost("add-model", Name = "AddModel")]
         public IActionResult AddModel(ModelsDto inputModel)
         {
             _serviceManager.ModelService.CreateModel(inputModel);
@@ -29,7 +33,10 @@ namespace Presentation.Controller
         [HttpGet("get-model-list")]
         public IActionResult GetModelList()
         {
-            var modelList = _serviceManager.ModelService.GetAllModels(false);
+            //Response.Headers.Add("Content-Type", "application/json");
+            //Response.Headers.Add("Allow", "GET");
+            //var incomingModelList = _serviceManager.ModelService.GetAllModels
+            var modelList = _serviceManager.ModelService.GetAllModelList(false);
             return Ok(modelList);
         }
 

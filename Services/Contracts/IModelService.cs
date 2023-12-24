@@ -10,7 +10,7 @@ namespace Services.Contracts
 {
     public interface IModelService
     {
-        IEnumerable<Model> GetAllModels(bool trackChanges);
+        IEnumerable<Model> GetAllModelList(bool trackChanges);
         Model GetModel(int id, bool trackChanges);
         ModelsDto CreateModel(ModelsDto model);
         void UpdateModel(ModelsDto model);// ÖNCE GET YAPILACAK Sonra Set
