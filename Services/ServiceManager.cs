@@ -19,12 +19,12 @@ namespace Services
         private readonly Lazy<IBrandService> _brandService;
         private readonly Lazy<IProductService> _productService;
         private readonly Lazy<IAuthenticationService> _authenticationService;
-        public ServiceManager(IRepositoryManager repositoryMananger, IMapper mapper, IDataShaper<ProductsDto> _shaper,
-                              IConfiguration configuration, UserManager<User> userManager)
+        public ServiceManager(IRepositoryManager repositoryMananger, IMapper mapper, IDataShaper<ModelsDto> _shaperModel, IDataShaper<ProductsDto> _shaperProduct,
+                              IDataShaper<BrandsDto> _shaperBrand, IConfiguration configuration, UserManager<User> userManager)
         {
-            _modelService = new Lazy<IModelService>(() => new ModelManager(repositoryMananger, mapper));
-            _brandService = new Lazy<IBrandService>(() => new BrandManager(repositoryMananger, mapper));
-            _productService = new Lazy<IProductService>(() => new ProductManager(repositoryMananger, mapper, _shaper));
+            _modelService = new Lazy<IModelService>(() => new ModelManager(repositoryMananger, mapper, _shaperModel));
+            _brandService = new Lazy<IBrandService>(() => new BrandManager(repositoryMananger, mapper, _shaperBrand));
+            _productService = new Lazy<IProductService>(() => new ProductManager(repositoryMananger, mapper, _shaperProduct));
             _authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationManager(userManager, mapper, configuration));
         }
         public IModelService ModelService => _modelService.Value;

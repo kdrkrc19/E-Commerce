@@ -272,7 +272,7 @@
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[6.24.0, )"
             }
           },
           "imports": [

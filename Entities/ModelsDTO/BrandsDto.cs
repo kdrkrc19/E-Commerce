@@ -6,5 +6,8 @@ using System.Threading.Tasks;
 
 namespace Entities.ModelsDTO
 {
-    public record class BrandsDto(int BrandId, string BrandName);
+    public  class BrandsDto {
+		public int BrandId {  get; set; }
+		public string BrandName { get; set; }
+	}  
 }

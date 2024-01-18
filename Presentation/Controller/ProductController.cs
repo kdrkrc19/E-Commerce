@@ -54,7 +54,7 @@ namespace Presentation.Controller
             return NotFound(id);
         }
 
-        [HttpPut("product-model")]
+        [HttpPut("update-product")]
         public IActionResult UpdateProduct(ProductsDto inputProduct)
         {
             var incomingProduct = _serviceManager.ProductService.GetProduct(inputProduct.ProductId, false);
@@ -79,9 +79,8 @@ namespace Presentation.Controller
             return NotFound(id);
         }
 
-        
         [HttpGet(Name = "GetRoot")]
-        public  IActionResult GetRoot()
+        private IActionResult GetRoot()
         {
             var mediaTypess = HttpContext.Request.Headers["Accept"].ToString().Split(',');
 
@@ -111,7 +110,7 @@ namespace Presentation.Controller
 
         //[HttpOptions]
         //[HttpHead]
-        [Authorize]
+        //[Authorize] // kullanıcı giriş yapmışsa 
         [HttpGet("get-product-list")]
         //[ResponseCache(Duration = 30)] //Maksimum Cacheleme süresi 60 saniye olarak ayarlandı
         public IActionResult GetProductList([FromQuery] RequestParameters parameters)
@@ -123,17 +122,29 @@ namespace Presentation.Controller
             return NotFound();
         }
 
-        //[HttpHead(Name = "get-product2")]
-        //public IActionResult GetProduct2(int id) 
-        //{
-        //    var incomingProduct = _serviceManager.ProductService.GetProduct(id, false);
-        //    if (incomingProduct!= null) return Ok(incomingProduct);
-        //    return NotFound();
-        //}
 
-       
+        [HttpGet("get-product-list-pagination")]
+		//[ResponseCache(Duration = 30)] //Maksimum Cacheleme süresi 60 saniye olarak ayarlandı
+		public IActionResult GetProductListPagination([FromQuery] RequestParameters parameters)
+		{
+			Response.Headers.Add("Content-Type", "application/json");
+			Response.Headers.Add("Allow", "GET");
+			var incomingProductListWithPagination = _serviceManager.ProductService.GetPagedAndShapedProducts(parameters, false);
+			if (incomingProductListWithPagination != null) return Ok(incomingProductListWithPagination);
+			return NotFound();
+		}
 
-    }
+		//[HttpHead(Name = "get-product2")]
+		//public IActionResult GetProduct2(int id) 
+		//{
+		//    var incomingProduct = _serviceManager.ProductService.GetProduct(id, false);
+		//    if (incomingProduct!= null) return Ok(incomingProduct);
+		//    return NotFound();
+		//}
+
+
+
+	}
 }
 
 //1- Pagination Filter modelinin entity katmanında tanımlanması gerekmektedir.

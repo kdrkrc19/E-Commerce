@@ -21,6 +21,9 @@ namespace Presentation.Controller
             _serviceManager = serviceManager;
         }
 
+
+        //kk
+        //aBcde123-
         [HttpPost]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto user)
         {
@@ -47,7 +50,7 @@ namespace Presentation.Controller
             var tokenDto = await _serviceManager
                 .AuthenticationService
                 .CreateToken(populateExp: true);
-
+            
             return Ok(tokenDto);
         }
 

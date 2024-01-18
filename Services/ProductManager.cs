@@ -42,7 +42,8 @@ namespace Services
         {
             var product = _repositoryManager.Product.GetProduct(id, false);
             _repositoryManager.Product.GenericDelete((Product)product);
-        }
+			_repositoryManager.Save();
+		}
 
         public IEnumerable<ExpandoObject> GetAllProductsList(RequestParameters parameters, bool trackChanges)
         {
@@ -117,5 +118,27 @@ namespace Services
                     return query; 
             }
         }
-    }
+
+		public IEnumerable<ExpandoObject> GetPagedAndShapedProducts(RequestParameters parameters, bool trackChanges)
+		{
+			var products = _repositoryManager.Product.GetPagedProducts(parameters, trackChanges);
+
+			// Product'ı ProductsDto'ya dönüştür
+			var productsDto = products.Select(p => new ProductsDto
+			{
+				ProductName = p.ProductName,
+				ProductId = p.ProductId,
+				ProductPrice = p.ProductPrice,
+				ProductStock = p.ProductStock,
+				ProductDescription = p.ProductDescription,
+				BrandId = p.BrandId,
+				ModelId = p.ModelId
+			});
+
+			// Dönüştürülmüş ProductsDto koleksiyonunu ExpandoObject olarak şekillendir
+			var shapeData = _dataShaper.ShapeDataList(productsDto, parameters.Fields);
+			return shapeData;
+		}
+
+	}
 }

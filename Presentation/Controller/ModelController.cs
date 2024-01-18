@@ -1,4 +1,6 @@
-﻿using Entities.ModelsDTO;
+﻿using Entities;
+using Entities.ModelsDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -30,15 +32,15 @@ namespace Presentation.Controller
             return Ok(inputModel);
         }
 
-        [HttpGet("get-model-list")]
-        public IActionResult GetModelList()
-        {
-            //Response.Headers.Add("Content-Type", "application/json");
-            //Response.Headers.Add("Allow", "GET");
-            //var incomingModelList = _serviceManager.ModelService.GetAllModels
-            var modelList = _serviceManager.ModelService.GetAllModelList(false);
-            return Ok(modelList);
-        }
+        //[HttpGet("get-model-list")]
+        //public IActionResult GetModelList()
+        //{
+        //    //Response.Headers.Add("Content-Type", "application/json");
+        //    //Response.Headers.Add("Allow", "GET");
+        //    //var incomingModelList = _serviceManager.ModelService.GetAllModels
+        //    var modelList = _serviceManager.ModelService.GetAllModelList(false);
+        //    return Ok(modelList);
+        //}
 
         [HttpGet("get-model-by-id/{id}")]
         public IActionResult GetModel(int id)
@@ -71,5 +73,58 @@ namespace Presentation.Controller
             }
             return NotFound(id);
         }
-    }
+
+        [HttpGet(Name = "GetRoot")]
+        private IActionResult GetRoot()
+        {
+            var mediaTypess = HttpContext.Request.Headers["Accept"].ToString().Split(',');
+
+            if (mediaTypess.Contains("application/vnd.acunmedyaakademi.apiroot"))
+            {
+                var list = new List<Link>() {
+                new Link() {
+                        Href = _linkGenerator.GetUriByName(HttpContext, nameof(GetRoot), new {  }),
+                        Rel = "_self",
+                        Method = "GET"
+                },
+                new Link() {
+                        Href = _linkGenerator.GetUriByName(HttpContext, nameof(AddModel), new {  }),
+                        Rel = "_self",
+                        Method = "POST"
+                },
+                new Link() {
+                        Href = _linkGenerator.GetUriByName(HttpContext, nameof(DeleteModel), new { }),
+                        Rel = "_self",
+                        Method = "DELETE"
+                }
+                };
+                return Ok(list);
+            }
+            return NoContent();
+        }
+
+        //[Authorize] // kullanıcı giriş yapmışsa
+        [HttpGet("get-model-list")]
+        public IActionResult GetModelList([FromQuery] RequestParameters parameters) 
+        {
+            Response.Headers.Add("Content-Type", "application/json");
+            Response.Headers.Add("Allow", "GET");
+
+            var incomingModelList = _serviceManager.ModelService.GetAllModelList(parameters, false);
+            if (incomingModelList != null) return Ok(incomingModelList);
+            return NotFound();
+
+        }
+
+		[HttpGet("get-model-list-pagination")]
+		//[ResponseCache(Duration = 30)] //Maksimum Cacheleme süresi 60 saniye olarak ayarlandı
+		public IActionResult GetModelListPagination([FromQuery] RequestParameters parameters)
+		{
+			Response.Headers.Add("Content-Type", "application/json");
+			Response.Headers.Add("Allow", "GET");
+			var incomingModelList = _serviceManager.ModelService.GetPagedAndShapedModels(parameters, false);
+			if (incomingModelList != null) return Ok(incomingModelList);
+			return NotFound();
+		}
+	}
 }

@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities;
+using Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Repositories.Contracts
     public interface IRepositoryModel : IRepositoryBase<Model>
     {
         Model GetModel(int id, bool trackChanges);
-    }
+		IEnumerable<Model> GetPagedModels(RequestParameters parameters, bool trackChanges);
+	}
 }

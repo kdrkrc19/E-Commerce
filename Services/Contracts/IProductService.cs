@@ -14,7 +14,8 @@ namespace Services.Contracts
     {
         IEnumerable<ExpandoObject> GetAllProductsList(RequestParameters parameters, bool trackChanges);
         IEnumerable<Product> GetAllProductsPagination(RequestParameters parameters, bool trackChanges);
-        Product GetProduct(int id, bool trackChanges);
+        IEnumerable<ExpandoObject> GetPagedAndShapedProducts(RequestParameters parameters, bool trackChanges);
+		Product GetProduct(int id, bool trackChanges);
         ProductsDto CreateProduct(ProductsDto product);
         void UpdateProduct(ProductsDto product);// ÖNCE GET YAPILACAK Sonra Set     
         void DeleteProduct(int id);// ÖNCE GET YAPILACAK Sonra Set

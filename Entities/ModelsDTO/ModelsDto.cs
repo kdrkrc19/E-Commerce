@@ -6,5 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entities.ModelsDTO
 {
-    public record class ModelsDto(int ModelId, string ModelName);
+    public class ModelsDto
+    {
+        public int ModelId { get; set; }
+        public string ModelName { get; set; }
+    }
 }

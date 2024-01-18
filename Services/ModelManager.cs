@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Entities;
 using Entities.Models;
 using Entities.ModelsDTO;
 using Repositories.Contracts;
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +17,13 @@ namespace Services
     {
         private readonly IMapper _mapper;
         private readonly IRepositoryManager _repositoryManager;
+        private readonly IDataShaper<ModelsDto> _dataShaper;
 
-        public ModelManager(IRepositoryManager repositoryManager, IMapper mapper)
+        public ModelManager(IRepositoryManager repositoryManager, IMapper mapper, IDataShaper<ModelsDto> dataShaper)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
+            _dataShaper = dataShaper;
         }
 
         public ModelsDto CreateModel(ModelsDto model)
@@ -35,11 +39,26 @@ namespace Services
         {
             var model = _repositoryManager.Model.GetModel(id, false);
             _repositoryManager.Model.GenericDelete((Model)model);
-        }
+			_repositoryManager.Save();
+		}
 
-        public IEnumerable<Model> GetAllModelList(bool trackChanges)
+        public IEnumerable<ExpandoObject> GetAllModelList(RequestParameters parameters,bool trackChanges)
         {
-            return _repositoryManager.Model.GenericRead(trackChanges);
+            List<ModelsDto> modelsDto = new List<ModelsDto>();
+            var model = _repositoryManager.Model.GenericRead(trackChanges);
+        
+            foreach (var item in model)
+            {
+                ModelsDto modelDto = new ModelsDto();
+
+                modelDto.ModelName = item.ModelName;
+                modelDto.ModelId = item.ModelId;
+
+                modelsDto.Add(modelDto);
+            }
+
+            var shapeData = _dataShaper.ShapeDataList(modelsDto, parameters.Fields);
+            return shapeData;
         }
 
         public Model GetModel(int id, bool trackChanges)
@@ -61,5 +80,21 @@ namespace Services
                 _repositoryManager.Save();
             }
         }
-    }
+
+		public IEnumerable<ExpandoObject> GetPagedAndShapedModels(RequestParameters parameters, bool trackChanges)
+		{
+			var models = _repositoryManager.Model.GetPagedModels(parameters, trackChanges);
+
+			// Product'ı ProductsDto'ya dönüştür
+			var modelsDto = models.Select(m => new ModelsDto
+			{
+				ModelId = m.ModelId,
+                ModelName = m.ModelName,
+			});
+
+			// Dönüştürülmüş ProductsDto koleksiyonunu ExpandoObject olarak şekillendir
+			var shapeData = _dataShaper.ShapeDataList(modelsDto, parameters.Fields);
+			return shapeData;
+		}
+	}
 }

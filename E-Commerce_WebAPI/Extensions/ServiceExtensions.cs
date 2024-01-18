@@ -41,6 +41,8 @@ namespace E_Commerce_WebAPI.Extensions
         public static void ConfigureDataShaper(this IServiceCollection services)
         {
             services.AddScoped<IDataShaper<ProductsDto>, DataShaper<ProductsDto>>();
+            services.AddScoped<IDataShaper<ModelsDto>, DataShaper<ModelsDto>>();
+            services.AddScoped<IDataShaper<BrandsDto>, DataShaper < BrandsDto >> ();
         }
 
         public static void AddCustomMediaTypes(this IServiceCollection services)

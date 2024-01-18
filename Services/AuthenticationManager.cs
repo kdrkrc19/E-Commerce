@@ -165,6 +165,5 @@ namespace Services
             }
             return principal;
         }
-
     }
 }
