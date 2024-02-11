@@ -11,18 +11,20 @@ namespace Entities.Models
     public class Product
     {
         [Key]
-    public int ProductId { get; set; }
-    public string ProductName { get; set; }
-    public double ProductPrice { get; set; }
-    public int ProductStock { get; set; }
-    public string ProductDescription { get; set; }
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
+        public double ProductPrice { get; set; }
+        public int ProductStock { get; set; }
+        public string ProductDescription { get; set; }
 
-    [ForeignKey("BrandId")] // BrandId sütunu ile ilişkilendirildi
-    public int BrandId { get; set; }
-    public Brand Brand { get; set; }
+        [ForeignKey("BrandId")] // BrandId sütunu ile ilişkilendirildi
+        public int BrandId { get; set; }
+        public Brand Brand { get; set; }
 
-    [ForeignKey("ModelId")] // ModelId sütunu ile ilişkilendirildi
-    public int ModelId { get; set; }
-    public Model Model { get; set; }
+        [ForeignKey("ModelId")] // ModelId sütunu ile ilişkilendirildi
+        public int ModelId { get; set; }
+        public Model Model { get; set; }
+        public string ProductImagePath { get; set; }
+
     }
 }

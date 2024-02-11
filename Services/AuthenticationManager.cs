@@ -65,7 +65,7 @@ namespace Services
 
             await _userManager.UpdateAsync(_user);
 
-            var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions); //patlıyo burda
+            var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
             return new TokenDto
             {
                 AccessToken = accessToken,

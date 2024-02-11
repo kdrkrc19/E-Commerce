@@ -53,6 +53,7 @@ namespace Services
 
                 modelDto.ModelName = item.ModelName;
                 modelDto.ModelId = item.ModelId;
+                modelDto.BrandId = item.BrandId;
 
                 modelsDto.Add(modelDto);
             }

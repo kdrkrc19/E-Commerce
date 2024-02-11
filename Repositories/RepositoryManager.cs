@@ -14,6 +14,7 @@ namespace Repositories
         private readonly Lazy<IRepositoryModel> _repositoryModel;
         private readonly Lazy<IRepositoryBrand> _repositoryBrand;
         private readonly Lazy<IRepositoryProduct> _repositoryProduct;
+        private readonly Lazy<IRepositoryEmailUs> _repositoryEmailUs;
 
         public RepositoryManager(RepositoryContext context)
         {
@@ -21,11 +22,13 @@ namespace Repositories
             _repositoryModel = new Lazy<IRepositoryModel>(() => new RepositoryModel(_context));
             _repositoryBrand = new Lazy<IRepositoryBrand>(() => new RepositoryBrand(_context));
             _repositoryProduct = new Lazy<IRepositoryProduct>(() => new RepositoryProduct(_context));
+            _repositoryEmailUs = new Lazy<IRepositoryEmailUs>(() => new RepositoryEmailUs(_context));
         }
 
         public IRepositoryBrand Brand => _repositoryBrand.Value; // LazyLoading Kullanımı 
         public IRepositoryModel Model => _repositoryModel.Value;
         public IRepositoryProduct Product => _repositoryProduct.Value;
+        public IRepositoryEmailUs EmailUs => _repositoryEmailUs.Value;
         public void Save()
         {
             _context.SaveChanges();

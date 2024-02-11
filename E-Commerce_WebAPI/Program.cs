@@ -29,7 +29,7 @@ builder.Services.AddControllers(configure =>
     configure.RespectBrowserAcceptHeader = true; //AcceptHeaderdan gelen dönüþ tipine izin verir. (içerik pazarlýðý yapar)
     configure.ReturnHttpNotAcceptable = true; //gelen isteðin dönüþ tipine izin verir
     //configure.CacheProfiles.Add("MyCache", new CacheProfile() { Duration = 300}); //Cache profili oluþturma
-})
+})  
     .AddXmlDataContractSerializerFormatters()
     .AddCustomCsvFormatter()
     .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);

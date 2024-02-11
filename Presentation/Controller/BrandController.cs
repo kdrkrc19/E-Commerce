@@ -25,14 +25,6 @@ namespace Presentation.Controller
             return Ok(brand);
         }
 
-        //[HttpGet("get-brand-list")]
-        //public IActionResult GetBrandList()
-        //{
-        //    var incomingBrandList = _serviceManager.BrandService.GetAllBrandsList(,false);
-        //    if (incomingBrandList != null) return Ok(incomingBrandList);
-        //    else return NotFound();
-        //}
-
         [HttpGet("get-brand-by-id/{id}")]
         public IActionResult GetBrand(int id)
         {

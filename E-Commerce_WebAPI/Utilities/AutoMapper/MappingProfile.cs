@@ -12,6 +12,7 @@ namespace E_Commerce_WebAPI.Utilities.AutoMapper
             CreateMap<BrandsDto, Brand>();
             CreateMap<ProductsDto, Product>();
             CreateMap<UserForRegistrationDto, User>();
+            CreateMap<EmailUsDto, EmailUs>();
         }
     }
 }

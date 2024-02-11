@@ -11,6 +11,7 @@ namespace Repositories.Contracts
         IRepositoryProduct Product { get; }
         IRepositoryModel Model { get; }
         IRepositoryBrand Brand { get; }
+        IRepositoryEmailUs EmailUs { get; }
         void Save();
     }
 }

@@ -32,16 +32,6 @@ namespace Presentation.Controller
             return Ok(inputModel);
         }
 
-        //[HttpGet("get-model-list")]
-        //public IActionResult GetModelList()
-        //{
-        //    //Response.Headers.Add("Content-Type", "application/json");
-        //    //Response.Headers.Add("Allow", "GET");
-        //    //var incomingModelList = _serviceManager.ModelService.GetAllModels
-        //    var modelList = _serviceManager.ModelService.GetAllModelList(false);
-        //    return Ok(modelList);
-        //}
-
         [HttpGet("get-model-by-id/{id}")]
         public IActionResult GetModel(int id)
         {

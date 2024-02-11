@@ -12,5 +12,6 @@ namespace Services.Contracts
         IModelService ModelService { get; }
         IProductService ProductService { get; }
         IAuthenticationService AuthenticationService { get; }
+        IEmailService EmailService { get; }
     }
 }

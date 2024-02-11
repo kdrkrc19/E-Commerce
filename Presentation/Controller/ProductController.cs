@@ -38,13 +38,6 @@ namespace Presentation.Controller
             return Ok(inputProduct);
         }
 
-        //[HttpGet("get-product-list")]
-        //public IActionResult GetProductList()
-        //{
-        //    var incomingProductList = _serviceManager.ProductService.GetAllProducts(false);
-        //    if (incomingProductList != null) return Ok(incomingProductList);
-        //    return NotFound();
-        //}
 
         [HttpGet("get-product-by-id/{id}")]
         public IActionResult GetProduct(int id)
@@ -122,7 +115,6 @@ namespace Presentation.Controller
             return NotFound();
         }
 
-
         [HttpGet("get-product-list-pagination")]
 		//[ResponseCache(Duration = 30)] //Maksimum Cacheleme süresi 60 saniye olarak ayarlandı
 		public IActionResult GetProductListPagination([FromQuery] RequestParameters parameters)
@@ -133,17 +125,6 @@ namespace Presentation.Controller
 			if (incomingProductListWithPagination != null) return Ok(incomingProductListWithPagination);
 			return NotFound();
 		}
-
-		//[HttpHead(Name = "get-product2")]
-		//public IActionResult GetProduct2(int id) 
-		//{
-		//    var incomingProduct = _serviceManager.ProductService.GetProduct(id, false);
-		//    if (incomingProduct!= null) return Ok(incomingProduct);
-		//    return NotFound();
-		//}
-
-
-
 	}
 }
 

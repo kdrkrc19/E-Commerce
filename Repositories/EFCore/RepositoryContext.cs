@@ -21,6 +21,7 @@ namespace Repositories.EFCore
         public DbSet<Model> Models { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<User> Users {  get; set; }
+        public DbSet<EmailUs> EmailUs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

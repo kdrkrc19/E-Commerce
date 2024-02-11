@@ -39,6 +39,35 @@ namespace E_Commerce_WebAPI.Migrations
                     b.ToTable("Brands");
                 });
 
+            modelBuilder.Entity("Entities.Models.EmailUs", b =>
+                {
+                    b.Property<int>("MailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MailId"));
+
+                    b.Property<string>("EMail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("textarea")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MailId");
+
+                    b.ToTable("EmailUs");
+                });
+
             modelBuilder.Entity("Entities.Models.Model", b =>
                 {
                     b.Property<int>("ModelId")
@@ -47,11 +76,16 @@ namespace E_Commerce_WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ModelId"));
 
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ModelName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ModelId");
+
+                    b.HasIndex("BrandId");
 
                     b.ToTable("Models");
                 });
@@ -71,6 +105,10 @@ namespace E_Commerce_WebAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProductDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -199,13 +237,13 @@ namespace E_Commerce_WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "35919898-396a-4044-874b-0747deee3e27",
+                            Id = "b7e2c611-5244-46ce-8968-68ba9c701c70",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "0357b5ea-c3d9-4a46-b083-ff27e6085dbf",
+                            Id = "ae0de8dc-44ff-48af-ba88-7d4930b731d3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -315,6 +353,17 @@ namespace E_Commerce_WebAPI.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Entities.Models.Model", b =>
+                {
+                    b.HasOne("Entities.Models.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
                 });
 
             modelBuilder.Entity("Entities.Models.Product", b =>

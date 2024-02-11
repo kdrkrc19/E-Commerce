@@ -42,7 +42,8 @@ namespace E_Commerce_WebAPI.Extensions
         {
             services.AddScoped<IDataShaper<ProductsDto>, DataShaper<ProductsDto>>();
             services.AddScoped<IDataShaper<ModelsDto>, DataShaper<ModelsDto>>();
-            services.AddScoped<IDataShaper<BrandsDto>, DataShaper < BrandsDto >> ();
+            services.AddScoped<IDataShaper<BrandsDto>, DataShaper<BrandsDto>>();
+            services.AddScoped<IDataShaper<EmailUsDto>, DataShaper<EmailUsDto>>();
         }
 
         public static void AddCustomMediaTypes(this IServiceCollection services)

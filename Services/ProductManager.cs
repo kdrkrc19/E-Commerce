@@ -50,12 +50,12 @@ namespace Services
             List<ProductsDto> productsDto = new List<ProductsDto>();
 
             var product = _repositoryManager.Product.GenericRead(trackChanges);
-            //var product = _repositoryManager.Product.GetPagedProducts(parameters, false);
 
             foreach (var item in product)
             {
                 ProductsDto productDto2 = new ProductsDto();
 
+                productDto2.ProductImagePath = item.ProductImagePath;
                 productDto2.ProductName = item.ProductName;
                 productDto2.ProductId = item.ProductId;
                 productDto2.ProductPrice = item.ProductPrice;
